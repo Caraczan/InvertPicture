@@ -11,5 +11,5 @@ Tested for Mac only, pretty sure it would work on linuxes too.<br />
 How does it work?<br />
 First make sure you have installed python3 and ImageMagick (links above).<br /> 
 Now put it together with pictures you want to invert,<br />
-and now just run script `python3 invert.py` and wait a moment.<br />
-New folder will be created, all inverted pictures will be put, and thats all.<br />
+and now just run script ```python3 invert.py``` and wait a moment.<br />
+New folder will be created, all inverted pictures will be put there, and thats all.<br />
