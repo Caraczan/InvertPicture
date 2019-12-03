@@ -3,22 +3,28 @@ from os import listdir, system, mkdir
 from os.path import isfile, join
 import argparse
 
+#parsing flags
 parser = argparse.ArgumentParser()
-parser.add_argument("-d", "--directory", default = "invertedPics", help="Landing directory name")
-parser.add_argument("-e", "--extension", default = ['.png','.jpg','.jpeg'], help = "Specyfic extension to invert")
+helpDir = "Name for new or existing directory for inverted pictures to be put in"
+helpExt = "Name of one extension by which script will filter puctures and convert only those with given extension"
+parser.add_argument("-d", "--directory", type = str, default = "inverted", help = helpDir)
+parser.add_argument("-e", "--extension", type = str, default = ['.png','.jpg','.jpeg'], help = helpExt)
 args = parser.parse_args()
 
-# important variables
+# list of extensions to be checked by to filter files and pics in current dir
 dotExtensions = args.extension
-if isinstance(dotExtensions, str):
-	dotExtensions =[dotExtensions]
+# name of directory where inverted pictures will be put
 defaultLandingDirectory = args.directory
 
 def isDotExt(name,extensions):
 	"""checks if it is one of corrects extensions, returns true if so if not returns false"""
-	for i in extensions:
-		if i in name:
+	if isinstance(extensions, str):
+		if extensions in name:
 			return True
+	else:
+		for i in extensions:
+			if i in name:
+				return True
 	return False
 
 """downloads pictures from current directory"""
