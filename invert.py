@@ -1,10 +1,16 @@
 #!python3
 from os import listdir, system, mkdir
 from os.path import isfile, join
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--directory", default = "invertedPics", help="Landing directory name")
+# parser.add_argument("-e", "--extension", type = , default = ['.png','.jpg','.jpeg'], help = "Specyfic extension to invert")
+args = parser.parse_args()
 
 # important variables
-dotExtensions = ['.png','.jpg','.jpeg']
-defaultLandingDirectory = 'invertedPics'
+dotExtensions = ['.png','.jpg','.jpeg'] # args.extension
+defaultLandingDirectory = args.directory
 
 def isDotExt(name,extensions):
 	"""checks if it is one of corrects extensions, returns true if so if not returns false"""
