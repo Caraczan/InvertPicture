@@ -30,7 +30,7 @@ parser = argparse.ArgumentParser()
 helpDir = "Name for new or existing directory for inverted pictures to be put in"
 helpExt = "Name of one extension by which script will filter puctures and convert only those with given extension"
 helpPic = "You can choose to invert one picture, make sure you write pic name with extension"
-parser.add_argument("-d", "--directory", type = str, default = "inverted", help = helpDir)
+parser.add_argument("-dn", "--directoryname", type = str, default = "inverted", help = helpDir)
 parser.add_argument("-e", "--extension", type = str, default = ['.png','.jpg','.jpeg','gif'], help = helpExt)
 parser.add_argument("-p", "--picture", type = str, default = None, help = helpPic)
 args = parser.parse_args()
@@ -38,7 +38,7 @@ args = parser.parse_args()
 # list of extensions to filter files and pics in current dir
 dotExtensions = args.extension
 # name of directory where inverted pictures will be put
-defaultLandingDirectory = args.directory
+defaultLandingDirectory = args.directoryname
 # name of one picture if you want to invert just one
 pic = args.picture
 

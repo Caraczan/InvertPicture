@@ -17,9 +17,9 @@ Tested for Mac only, pretty sure it would work on linux distros too. <br />
 4. Check new pics in newly created folder.
 
 **Flags**
-* -e  - takes ```.extensionName``` (e.g. .png .tiff ..), it replaces standard list of extension with one given after flag. Useful with -p options if file given there has non-standard extension.
-* -d  - name of directory that script will make and put or put inverted pictures.
-* -p  - name of the picture to invert, it will invert just this picture. If you want to invert picture with non-standard extension use -e flag.
+* ```-e .ext``` - takes ```.extensionName``` (e.g. .png .tiff ..), it replaces standard list of extension with one given after flag. Useful with -p options if file given there has non-standard extension.
+* ```-dn directoryName``` - name of directory that script will make and put or put inverted pictures.
+* ```-p picture.ext``` - name of the picture to invert, it will invert just this picture. If you want to invert picture with non-standard extension use -e flag.
 
 **Standard extensions**
 - .png
