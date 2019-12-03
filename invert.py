@@ -1,5 +1,5 @@
 #!python3
-from os import listdir, system
+from os import listdir, system, mkdir
 from os.path import isfile, join
 
 # important variables
@@ -23,16 +23,15 @@ if onlypictures:
 		if i == defaultLandingDirectory:
 			ch = True
 	if ch == False:
-		system("mkdir "+defaultLandingDirectory)
+		mkdir(defaultLandingDirectory)
 
 	"""inverting pictures and putting them in directory"""
-	for pic in onlyfiles:
+	for pic in onlypictures:
 		system("magick "+pic+" -negate "+defaultLandingDirectory+'/'+pic)
 
 else:
 	"""If it wont find any images it will put this message on screen"""
 	print("No pictures given viable for inversion.")
-	print("Pictures with ")
-	for i in Dot:
+	print("Eligable for converion:")
+	for i in dotExtensions:
 		print(i)
-	print("extensions can be inverted.")
