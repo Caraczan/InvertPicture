@@ -1,4 +1,4 @@
-# NegatePictures
+# InvertPicture
 invert.py is a simply script that inverts colors pictures. <br />
 Script uses magick from ImageMagick in this script. <br />
 
