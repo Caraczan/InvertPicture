@@ -5,11 +5,13 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--directory", default = "invertedPics", help="Landing directory name")
-# parser.add_argument("-e", "--extension", type = , default = ['.png','.jpg','.jpeg'], help = "Specyfic extension to invert")
+parser.add_argument("-e", "--extension", default = ['.png','.jpg','.jpeg'], help = "Specyfic extension to invert")
 args = parser.parse_args()
 
 # important variables
-dotExtensions = ['.png','.jpg','.jpeg'] # args.extension
+dotExtensions = args.extension
+if isinstance(dotExtensions, str):
+	dotExtensions =[dotExtensions]
 defaultLandingDirectory = args.directory
 
 def isDotExt(name,extensions):
@@ -22,7 +24,6 @@ def isDotExt(name,extensions):
 """downloads pictures from current directory"""
 onlypictures = [file for file in listdir() if isfile(join(file)) and isDotExt(file,dotExtensions)]
 if onlypictures:
-
 	"""checks if file exist, it is only so there is no throw out error from mkdir that directory exist"""
 	ch = False
 	for i in listdir():
