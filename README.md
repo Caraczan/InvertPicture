@@ -10,8 +10,24 @@ Tested on Mac only, pretty sure it would work on linux distributions and Windows
 1. [Python3](https://www.python.org)
 2. [ImageMagick](https://imagemagick.org/index.php)
 
+This script is directed at users of macOS.<br />
+This simple POSIX script with three lines of code actual code, installs Homebrew repository, python3 and ImageMagick.
+```
+#!/bin/bash
+
+# installing homebrew
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# installing python3 from homebrew
+brew install python3
+# installing imagegick from homebrew
+brew install imagemagick
+```
+If you want to install everything separately just put those commands into Terminal from top to bottom (omit lines with hashes).
+
+---
+
 **How does it work?**
-1. First make sure you have installed python3 and ImageMagick (links above),
+1. First make sure you have installed python3 and ImageMagick (instruction above),
 2. Now put script with pictures you want to invert,
 3. Run it,
 4. Check new pics in newly created folder.
