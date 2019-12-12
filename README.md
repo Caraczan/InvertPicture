@@ -1,6 +1,7 @@
 # InvertPicture
 invert.py is a simply script that inverts pictures colors.
-Script uses magick from ImageMagick in this script. <br />
+Script now uses one of two possible methods to invert picture. Depending on the mode of picture.
+Main reason for change was to make it independent from magick command(which didn't work) and to make it faster(which worked).
 
 Tested on Mac only, pretty sure it would work on linux distributions and Windows with few tweaks.
 
@@ -8,7 +9,8 @@ Tested on Mac only, pretty sure it would work on linux distributions and Windows
 
 **Dependencies:**
 1. [Python3](https://www.python.org)
-2. [ImageMagick](https://imagemagick.org/index.php)
+2. [Pillow](https://pillow.readthedocs.io/en/3.1.x/index.html)
+3. [ImageMagick](https://imagemagick.org/index.php)
 
 This script is directed at users of macOS.<br />
 This simple POSIX script with three lines of code actual code, installs Homebrew repository, python3 and ImageMagick.
@@ -21,6 +23,12 @@ This simple POSIX script with three lines of code actual code, installs Homebrew
 brew install python3
 # installing imagegick from homebrew
 brew install imagemagick
+pip3 install Pillow
+
+# pip3 should be installed with python3 automatically.
+# if not install using this command:
+# sudo easy_install pip
+# and rerun last command in Terminal.
 ```
 If you want to install everything separately just put those commands into Terminal from top to bottom (omit lines with hashes).
 
