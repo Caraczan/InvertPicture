@@ -13,11 +13,17 @@ abspath += '/'
 #print('abspath: ', abspath)
 
 def isDotExt(name,extensions):
-	"""checks if it is one of corrects extensions, returns true if so if not returns false"""
 	for i in extensions:
 		if i in str(name):
 			return True
 	return False
+
+def findmany(string,find):
+	many = 0
+	for i in string:
+		if i == find:
+			many += 1
+	return many
 
 # activating args parser
 parser = argparse.ArgumentParser()
@@ -28,7 +34,7 @@ helpPic = "You can choose to invert one picture, make sure you write picture nam
 # parsing flags
 parser.add_argument("-dn", "--directoryname", type = str, default = "inverted/", help = helpDir)
 parser.add_argument("-e", "--extension", type = str, default = ['.png','.jpg','.jpeg','.gif','.tiff'], help = helpExt)
-parser.add_argument("-p", "--picture", type = str, default = None, help = helpPic)
+parser.add_argument("-p", "--picture", type = str, nargs='+', default = None, help = helpPic)
 args = parser.parse_args()
 #
 
@@ -40,17 +46,17 @@ else:
 #print(type(dotExtension))
 #print(dotExtension)
 
-#checking if user given picture as argument and parsing it if not downloading it from listdir and checking if dotExtension
-if type(args.picture) == str:
-	if '/' in args.picture:
-		pic = [args.picture.rsplit('/',1)[1]]
-	else:
-		pic = [args.picture]
-	if isDotExt(pic,dotExtension) == False:
-		print('Incorect/incompatible picture extension, please use -e flag is you sure it will work or convert picture to other correct format, like: .png, .jpg/jpeg, .gif')
-		exit()
+#checking if user given picture as argument and parsing it if not downloading it from listdir
+if args.picture:
+	pic = list()
+	#pic = [picture.replace('/','') for picture in args.picture]
+	for picture in args.picture:
+		if '/' in picture:
+			tpic = picture.rsplit('/',1)[1]
+			if tpic != '' and findmany(tpic,'.') == 1 and isDotExt(tpic,dotExtension):
+				pic.append(tpic)
 else:
-	pic = [file for file in listdir(abspath) if isfile(join(file)) and isDotExt(file,dotExtension)]
+	pic = [file for file in listdir(abspath) if isfile(join(file)) and isDotExt(file,dotExtension)]	
 #print(type(pic))
 #print(pic)
 
