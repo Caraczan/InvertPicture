@@ -1,101 +1,73 @@
 #!python3
 from os import listdir, system, mkdir, getcwd
-from os.path import isfile, join
-
+from os.path import isfile, join, realpath
 import argparse
 
-from PIL import Image, ImageOps
+# way to getting absolute path to the script and its Name
+abspath = realpath(__file__)
+abspath, sname = abspath.rsplit('/',1)
+abspath += '/'
+# abspath - absolute path to the folder conatinging script(absoulute means from root folder / )
+# sname - name of script (if it would be changed by someone)
+#print('sname: ',sname)
+#print('abspath: ', abspath)
 
 def isDotExt(name,extensions):
 	"""checks if it is one of corrects extensions, returns true if so if not returns false"""
-	if isinstance(extensions, str):
-		if extensions[1] != '.':
-			extensions = '.' + extensions
-		if extensions in name:
+	for i in extensions:
+		if i in str(name):
 			return True
-	else:
-		for i in extensions:
-			if i in name:
-				return True
 	return False
 
-def checkDir(defaultLandingDirectory):
-	if defaultLandingDirectory[-1] == '/':
-		dLD = defaultLandingDirectory[:-1]
-	ch = False
-	for i in listdir():
-		if i == dLD:
-			ch = True
-	if ch == False:
-		mkdir(dLD)
-
-def magickInvertCommand(pic, defaultLandingDirectory):
-	defaultLandingDirectory = slashCheck(defaultLandingDirectory)
-	system("magick "+pic+" -negate "+defaultLandingDirectory+pic)
-
-def slashCheck(string):
-	if string != None and string[-1] != '/':
-		string += '/'
-		return string
-	else:
-		return string
-
-def invert(pic):
-	pic = ImageOps.invert(pic)
-	return pic
-
-# parsing flags
+# activating args parser
 parser = argparse.ArgumentParser()
+# help text for flag parser
 helpDir = "Name for new or existing directory for inverted pictures to be put in"
 helpExt = "Name of one extension by which script will filter puctures and convert only those with given extension"
 helpPic = "You can choose to invert one picture, make sure you write picture name with extension"
-
-parser.add_argument("-dn", "--directoryname", type = str, default = "inverted", help = helpDir)
-parser.add_argument("-e", "--extension", type = str, default = ['.png','.jpg','.jpeg','gif'], help = helpExt)
+# parsing flags
+parser.add_argument("-dn", "--directoryname", type = str, default = "inverted/", help = helpDir)
+parser.add_argument("-e", "--extension", type = str, default = ['.png','.jpg','.jpeg','.gif','.tiff'], help = helpExt)
 parser.add_argument("-p", "--picture", type = str, default = None, help = helpPic)
 args = parser.parse_args()
+#
 
-# list of extensions to filter files and pics in current dir
-dotExtensions = args.extension
-# name of directory where inverted pictures will be put
-defaultLandingDirectory = args.directoryname
-defaultLandingDirectory = slashCheck(defaultLandingDirectory)
-# name of one picture if you want to invert just one
-pic = args.picture
-# we will not allow to pull pictures from other places
-pic = slashCheck(pic)
-
-if pic:
-	if isDotExt(pic, dotExtensions):
-		checkDir(defaultLandingDirectory)
-		# print(pic.mode)
-		pic = Image.open(i)
-		if pic.mode == 'P':
-			magickInvertCommand(i,defaultLandingDirectory)
-		else:	
-			invert(pic)
-			pic.save(defaultLandingDirectory+i)	
-
-	else:
-		print('Picture name must be in current directory to exist,\nif you use pictures with strange/non-standard extension please use -e .ext with your extension in place of .ext')
+#extension checking module, trust the user
+if type(args.extension) == str:
+	dotExtension = [args.extension]
 else:
-	pic = [file for file in listdir() if isfile(join(file)) and isDotExt(file,dotExtensions)]
-	if pic:
-		"""checks if file exist, it is only so there is no throw out error from mkdir that directory exist"""
-		checkDir(defaultLandingDirectory)
-		"""inverting pictures and putting them in directory"""
-		for i in pic:
-			pic = Image.open(i)
-			# print(pic.mode)
-			if pic.mode == 'P':
-				magickInvertCommand(i,defaultLandingDirectory)
-			else:	
-				pic = invert(pic)
-				pic.save(defaultLandingDirectory+i)	
-			
+	dotExtension = args.extension
+#print(type(dotExtension))
+#print(dotExtension)
+
+#checking if user given picture as argument and parsing it if not downloading it from listdir and checking if dotExtension
+if type(args.picture) == str:
+	if '/' in args.picture:
+		pic = [args.picture.rsplit('/',1)[1]]
 	else:
-		"""If it wont find any images it will put this message on screen"""
-		print("No pictures given viable for inversion.")
-		print("Eligable for inversion:")
-		for i in dotExtensions:
-			print(i)
+		pic = [args.picture]
+	if isDotExt(pic,dotExtension) == False:
+		print('Incorect/incompatible picture extension, please use -e flag is you sure it will work or convert picture to other correct format, like: .png, .jpg/jpeg, .gif')
+		exit()
+else:
+	pic = [file for file in listdir(abspath) if isfile(join(file)) and isDotExt(file,dotExtension)]
+#print(type(pic))
+#print(pic)
+
+#checking landing directory name
+if args.directoryname == 'inverted/':
+	dn = args.directoryname
+else:
+	dn = args.directoryname.replace('/','')
+	dn += '/'
+#print(dn)
+
+#checking directory existance
+if dn.split('/')[0] in listdir(abspath):
+	print('Directory '+dn+' of that name exist in this folder.')
+else:
+	mkdir(abspath+dn)
+
+#conversion itself, and saving, as we call magick command
+for i in pic:
+	system('magick '+i+' -negate '+dn+i)
