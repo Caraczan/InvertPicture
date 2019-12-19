@@ -12,6 +12,8 @@ abspath += '/'
 #print('sname: ',sname)
 #print('abspath: ', abspath)
 
+standardExtension = ['.png','.jpg','.jpeg','.gif','.tiff']
+
 def isDotExt(name,extensions):
 	for i in extensions:
 		if i in str(name):
@@ -30,26 +32,32 @@ parser = argparse.ArgumentParser()
 # help text for flag parser
 helpDir = "Name for new or existing directory for inverted pictures to be put in"
 helpExt = "Name of one extension by which script will filter puctures and convert only those with given extension"
-helpPic = "You can choose to invert one picture, make sure you write picture name with extension"
+helpApExt = 'Add extension over to the standard extension, repetive extension will be anihilated.'
+helpPic = "You can choose to invert one picture, make sure you write picture name with extension."
 # parsing flags
 parser.add_argument("-dn", "--directoryname", type = str, default = "inverted/", help = helpDir)
-parser.add_argument("-e", "--extension", type = str, default = ['.png','.jpg','.jpeg','.gif','.tiff'], help = helpExt)
+parser.add_argument("-e", "--extension", type = str, nargs='+', default = None, help = helpExt)
+parser.add_argument('-ae', '--appendextension', nargs='+', type='str', default = None, help = helpApExt)
 parser.add_argument("-p", "--picture", type = str, nargs='+', default = None, help = helpPic)
 args = parser.parse_args()
 #
 
-#extension checking module, trust the user
-if type(args.extension) == str:
-	dotExtension = [args.extension]
+
+#extension checking module, trust the user (no don't trust him)
+if args.appendextension != None:
+	if args.extension == None:
+		dotExtension = standardExtension + args.appendextension
+	else:
+		dotExtension = args.extension
 else:
-	dotExtension = args.extension
-#print(type(dotExtension))
-#print(dotExtension)
+	if args.extension == None:
+		dotExtension = standardExtension
+	else:
+		dotExtension = args.extension
 
 #checking if user given picture as argument and parsing it if not downloading it from listdir
 if args.picture:
 	pic = list()
-	#pic = [picture.replace('/','') for picture in args.picture]
 	for picture in args.picture:
 		if '/' in picture:
 			tpic = picture.rsplit('/',1)[1]

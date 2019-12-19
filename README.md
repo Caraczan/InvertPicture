@@ -5,6 +5,10 @@ Script has been flattened and simpliefied for sake of clarity and overall speed.
 
 ---
 
+```-e``` and ```-ae``` flags allow multiply inputs, zero processing and filtering for them.
+* -e takes and exchange of the standard extesnions,
+* -ae takes and append to the standard extension.
+
 Small but significant change, now ```-p``` flag will take more then one argument. Also handling input is slghtly different, now it will also filter from more than ```.``` in string, those will not be added to list and in effect processed.
 
 Now user should be aware of changes/warnings:
@@ -42,7 +46,8 @@ If you want to install everything separately just put those commands into Termin
 3. Check new pics in newly created folder.
 
 ## Flags
-* ```-e .extension``` - takes *.extensionName* (e.g. .png .tiff ..), it replaces standard list of extension with one given after flag. Useful with -p options if file given there has non-standard extension.
+* ```-e .ext1 .ext2 ..``` - takes multiply *.extensionName* (e.g. .png .tiff ..), it replaces standard list of extension with one given after flag. Useful with -p options if file given there has non-standard extension.
+* ```-ae .ext1 .ext2 ..``` - takes multiply and append on top of standard extenion, it will not remember after action.
 * ```-dn directory_name``` - name of directory that script will make and put or put inverted pictures.
 * ```-p picture.ext``` - name of the picture to invert, it will invert just this picture. If you want to invert picture with non-standard extension use -e flag.
 
