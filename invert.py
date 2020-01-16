@@ -1,4 +1,4 @@
-#!python3
+#!/usr/bin/python3
 from os import listdir, system, mkdir, getcwd
 from os.path import isfile, join, realpath
 import argparse
@@ -17,7 +17,8 @@ standardExtension = ['.png','.jpg','.jpeg','.gif','.tiff']
 def isDotExt(name,extensions):
 	for i in extensions:
 		if i in str(name):
-			return True
+			retll
+			urn True
 	return False
 
 def findmany(string,find):

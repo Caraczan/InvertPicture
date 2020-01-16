@@ -1,8 +1,14 @@
 #!/bin/bash
 
 # installing homebrew
-/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if [[ $(brew | grep '\w: command not found: brew') == "" ]]; then
+	/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
 # installing python3 from homebrew
-brew install python3
+if [[ $(python -V) < 2.8 && $(python3 -V) < 3 ]]; then
+	brew install python3
+fi
 # installing imagegick from homebrew
-brew install imagemagick
+if [[ $(magick | grep '\w: command not found: magick') == "" ]]; then
+	brew install imagemagick
+fi
