@@ -37,7 +37,7 @@ helpPic = "You can choose to invert one picture, make sure you write picture nam
 # parsing flags
 parser.add_argument("-dn", "--directoryname", type = str, default = "inverted/", help = helpDir)
 parser.add_argument("-e", "--extension", type = str, nargs='+', default = None, help = helpExt)
-parser.add_argument('-ae', '--appendextension', nargs='+', type='str', default = None, help = helpApExt)
+parser.add_argument('-ae', '--appendextension', nargs='+', type=str, default = None, help = helpApExt)
 parser.add_argument("-p", "--picture", type = str, nargs='+', default = None, help = helpPic)
 args = parser.parse_args()
 #
