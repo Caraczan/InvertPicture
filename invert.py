@@ -17,8 +17,7 @@ standardExtension = ['.png','.jpg','.jpeg','.gif','.tiff']
 def isDotExt(name,extensions):
 	for i in extensions:
 		if i in str(name):
-			retll
-			urn True
+			return True
 	return False
 
 def findmany(string,find):
