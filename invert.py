@@ -3,6 +3,9 @@ from os import listdir, system, mkdir, getcwd
 from os.path import isfile, join, realpath
 import argparse
 
+# { ^ ; ^ }
+#    ___
+
 # way to getting absolute path to the script and its Name
 abspath = realpath(__file__)
 abspath, sname = abspath.rsplit('/',1)
